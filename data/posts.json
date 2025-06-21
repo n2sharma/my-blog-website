@@ -1,0 +1,65 @@
+[
+  {
+    "title": "Air India Disaster",
+    "author": "Dr Poonam",
+    "cover": "https://th-i.thgim.com/public/incoming/4bnu9l/article69691553.ece/alternates/LANDSCAPE_1200/2219936162.jpg",
+    "body": "An Air India flight to London crashed into a residential neighbourhood in Ahmedabad shortly after takeoff on Thursday, erupting in a huge fireball and killing all on board, except one. Miraculously, one passenger ejected from the aircraft survived. The victims included medical students who were staying in a college hostel struck by the plane.",
+    "id": "a1312f73-fed4-4283-b590-e9d419028ce1",
+    "slug": "air-india-disaster",
+    "createdAt": "2025-06-21T20:18:28.908Z"
+  },
+  {
+    "id": "1",
+    "slug": "sports-update",
+    "title": "Latest in Sports: Champions Rise",
+    "cover": "/sports.jpg",
+    "author": "Naman Sharma",
+    "body": "Sports around the world are heating up. From football to cricket, fans are on the edge of their seats.\n\n{{block name=\"Top Picks\" image=\"/top-products.jpg\" products=\"SKU123,SKU456\"}}",
+    "createdAt": "2025-06-21T10:00:00.000Z"
+  },
+  {
+    "id": "2",
+    "slug": "incredible-india",
+    "title": "Exploring the Heart of India",
+    "cover": "/india.jpg",
+    "author": "Naman Sharma",
+    "body": "India is a land of diversity, culture, and innovation. From the Himalayas to Kanyakumari, there's beauty at every step.",
+    "createdAt": "2025-06-21T11:00:00.000Z"
+  },
+  {
+    "id": "3",
+    "slug": "latest-movies",
+    "title": "Movies to Watch This Month",
+    "cover": "/movies.jpg",
+    "author": "Naman Sharma",
+    "body": "Theatres are packed again! Here’s our list of must-watch blockbusters and indie gems for the season.",
+    "createdAt": "2025-06-21T12:00:00.000Z"
+  },
+  {
+    "id": "4",
+    "slug": "specscart-story",
+    "title": "Behind the Scenes at Specscart",
+    "cover": "/specscart.avif",
+    "author": "Naman Sharma",
+    "body": "At Specscart, we believe in innovation and design. Discover how we’re changing the way people see the world.",
+    "createdAt": "2025-06-21T13:00:00.000Z"
+  },
+  {
+    "id": "5",
+    "slug": "cars-of-future",
+    "title": "The Cars of Tomorrow",
+    "cover": "/future-cars.jpg",
+    "author": "Naman Sharma",
+    "body": "Electric, autonomous, and stylish—check out the next-gen cars redefining transportation.\n\n{{block name=\"Trending Accessories\" image=\"/top-products.jpg\" products=\"SKU456,SKU789\"}}",
+    "createdAt": "2025-06-21T14:00:00.000Z"
+  },
+  {
+    "id": "6",
+    "slug": "dream-homes",
+    "title": "Inside the Most Beautiful Houses",
+    "cover": "/dream-home.jpg",
+    "author": "Naman Sharma",
+    "body": "From modern architecture to cozy cottages, we explore homes that inspire.\n\n{{block name=\"Editor Picks\" image=\"/top-products.jpg\" products=\"SKU123,SKU789\"}}",
+    "createdAt": "2025-06-21T15:00:00.000Z"
+  }
+]
