@@ -1,23 +1,20 @@
-import PostForm, { PostPayload } from '@/components/PostForm';
-import type { Post } from '@/types/post';
-import { notFound } from 'next/navigation';
+// app/edit/[id]/page.tsx
+import PostForm, { PostPayload } from "@/components/PostForm";
+import type { Post } from "@/types/post";
+import { notFound } from "next/navigation";
 
-export const runtime = 'nodejs'; // suppress Edge param warnings
+export const runtime = "nodejs";
 
-export default async function EditPage({
-  params,
-}: {
-  params: { id: string };
-}) {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export default async function EditPage({ params }: any) {
   const { id } = params;
 
-  const post: Post | undefined = await fetch(
-    `http://localhost:3000/api/posts/${id}`,
-    { cache: 'no-store' }
-  ).then((r) => (r.ok ? r.json() : undefined));
+  const res = await fetch(`http://localhost:3000/api/posts/${id}`, {
+    cache: "no-store",
+  });
+  if (!res.ok) notFound();
 
-  if (!post) notFound();
-
+  const post: Post = await res.json();
   const { title, author, cover, body } = post;
 
   return (

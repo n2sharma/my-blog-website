@@ -10,15 +10,11 @@ import DeleteButton from "@/components/DeleteButton";
 import { FaEdit } from "react-icons/fa";
 import Image from "next/image";
 
-export default async function PostPage({
-  params,
-}: {
-  params: { slug: string };
-}) {
-  /** 1️⃣ read slug before await */
-  const { slug } = params;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export default async function PostPage({ params }: any) {
+  const { slug } = params as { slug: string };
 
-  /** 2️⃣ fetch posts */
+  // fetch posts
   const posts: Post[] = await fetch("http://localhost:3000/api/posts", {
     cache: "no-store",
   }).then((r) => r.json());
@@ -26,12 +22,11 @@ export default async function PostPage({
   const post = posts.find((p) => p.slug === slug);
   if (!post) notFound();
 
-  /** 3️⃣ parse body */
   const chunks = parseBlocks(post.body);
 
   return (
     <article className="max-w-3xl mx-auto bg-white rounded-lg shadow px-6 pb-12 pt-6">
-      {/* Cover image */}
+      {/* Cover */}
       {post.cover && (
         <div className="mb-6 overflow-hidden rounded-lg">
           <Image
@@ -45,7 +40,7 @@ export default async function PostPage({
         </div>
       )}
 
-      {/* Title + meta */}
+      {/* Title & meta */}
       <h1 className="text-3xl font-extrabold mb-2 leading-tight">
         {post.title}
       </h1>
@@ -53,7 +48,7 @@ export default async function PostPage({
         {new Date(post.createdAt).toLocaleDateString()} &middot; {post.author}
       </p>
 
-      {/* Body with blocks */}
+      {/* Body */}
       <div className="prose prose-lg max-w-none">
         {chunks.map((chunk, i) =>
           typeof chunk === "string" ? (
@@ -64,7 +59,7 @@ export default async function PostPage({
         )}
       </div>
 
-      {/* Action buttons */}
+      {/* Actions */}
       <div className="mt-10 flex gap-4">
         <Link
           href={`/edit/${post.id}`}
@@ -72,7 +67,6 @@ export default async function PostPage({
         >
           <FaEdit /> Edit
         </Link>
-
         <DeleteButton id={post.id} />
       </div>
     </article>
