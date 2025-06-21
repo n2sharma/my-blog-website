@@ -1,18 +1,18 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function CreatePostPage() {
   const router = useRouter();
   const [form, setForm] = useState({
-    title: '',
-    author: '',
-    cover: '',
-    body: '',
+    title: "",
+    author: "",
+    cover: "",
+    body: "",
   });
 
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
   const [submitting, setSubmitting] = useState(false);
 
   const isValidUrl = (url: string) => {
@@ -25,30 +25,31 @@ export default function CreatePostPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError('');
+    setError("");
 
     const { title, author, body, cover } = form;
     if (!title || !author || !body) {
-      return setError('Please fill in all required fields.');
+      return setError("Please fill in all required fields.");
     }
     if (cover && !isValidUrl(cover)) {
-      return setError('Cover image must be a valid URL.');
+      return setError("Cover image must be a valid URL.");
     }
 
     try {
       setSubmitting(true);
-      const res = await fetch('/api/posts', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+      const res = await fetch("/api/posts", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(form),
       });
 
       if (!res.ok) {
         const { error } = await res.json();
-        throw new Error(error || 'Failed to create post');
+        throw new Error(error || "Failed to create post");
       }
 
-      router.push('/');
+      router.push("/");
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       setError(err.message);
     } finally {
@@ -56,7 +57,9 @@ export default function CreatePostPage() {
     }
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
@@ -88,7 +91,9 @@ export default function CreatePostPage() {
         </div>
 
         <div>
-          <label className="block text-sm font-medium">Cover Image URL (optional)</label>
+          <label className="block text-sm font-medium">
+            Cover Image URL (optional)
+          </label>
           <input
             name="cover"
             value={form.cover}
@@ -118,7 +123,7 @@ export default function CreatePostPage() {
           disabled={submitting}
           className="bg-black text-white px-6 py-2 rounded hover:bg-gray-800 disabled:opacity-50"
         >
-          {submitting ? 'Publishing…' : 'Publish Post'}
+          {submitting ? "Publishing…" : "Publish Post"}
         </button>
       </form>
     </div>
