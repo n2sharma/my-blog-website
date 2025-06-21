@@ -1,13 +1,10 @@
 // app/page.tsx
 import PostCard from "@/components/PostCard";
 import type { Post } from "@/types/post";
+import { getBaseUrl } from "@/lib/baseUrl";
 
 export default async function Home() {
-  // 1️⃣ Resolve base URL
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
-
-  // 2️⃣ Fetch posts with error handling
-  const res = await fetch(`${baseUrl}/api/posts`, { cache: "no-store" });
+  const res = await fetch(`${getBaseUrl()}/api/posts`, { cache: "no-store" });
 
   if (!res.ok) {
     // Log the error body for easier debugging in Vercel logs

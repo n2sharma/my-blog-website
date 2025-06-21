@@ -1,5 +1,6 @@
 // app/edit/[id]/page.tsx
 import PostForm, { PostPayload } from "@/components/PostForm";
+import { getBaseUrl } from "@/lib/baseUrl";
 import type { Post } from "@/types/post";
 import { notFound } from "next/navigation";
 
@@ -9,7 +10,7 @@ export const runtime = "nodejs";
 export default async function EditPage({ params }: any) {
   const { id } = params;
 
-  const res = await fetch(`http://localhost:3000/api/posts/${id}`, {
+  const res = await fetch(`${getBaseUrl()}/api/posts/${id}`, {
     cache: "no-store",
   });
   if (!res.ok) notFound();

@@ -9,13 +9,14 @@ import Link from "next/link";
 import DeleteButton from "@/components/DeleteButton";
 import { FaEdit } from "react-icons/fa";
 import Image from "next/image";
+import { getBaseUrl } from "@/lib/baseUrl";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default async function PostPage({ params }: any) {
   const { slug } = params as { slug: string };
 
   // fetch posts
-  const posts: Post[] = await fetch("http://localhost:3000/api/posts", {
+  const posts: Post[] = await fetch(`${getBaseUrl()}/api/posts`, {
     cache: "no-store",
   }).then((r) => r.json());
 
