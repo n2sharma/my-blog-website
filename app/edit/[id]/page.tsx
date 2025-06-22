@@ -33,9 +33,6 @@ export default async function EditPage({ params }: EditPageProps) {
       <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-8">
         Edit Blog Post
       </h1>
-      <h1 className="text-3xl font-bold text-red-500 dark:text-yellow-300">
-        Test Dark Mode
-      </h1>
       <PostForm initial={initialData} postId={id} />
     </section>
   );
