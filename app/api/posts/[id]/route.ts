@@ -1,37 +1,38 @@
-import { NextResponse } from 'next/server';
+import { NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
 import {
   getPostById,
   updatePost,
   deletePost,
-} from '@/lib/posts';
-import type { Post } from '@/types/post';
+} from "@/lib/posts";
+import type { Post } from "@/types/post";
 
-/* GET /api/posts/[id] */
 export async function GET(
-  req: Request,
-  { params }: { params: { id: string } }
+  req: NextRequest,
+  context: { params: { id: string } }
 ) {
-  const post = await getPostById(params.id);
-  if (!post) return NextResponse.json({ error: 'Not found' }, { status: 404 });
+  const { id } = context.params;
+  const post = await getPostById(id);
+  if (!post) return NextResponse.json({ error: "Not found" }, { status: 404 });
   return NextResponse.json(post);
 }
 
-/* PUT /api/posts/[id] */
 export async function PUT(
-  req: Request,
-  { params }: { params: { id: string } }
+  req: NextRequest,
+  context: { params: { id: string } }
 ) {
+  const { id } = context.params;
   const patch = (await req.json()) as Partial<Post>;
-  await updatePost(params.id, { ...patch, updatedAt: new Date().toISOString() });
-  const updated = await getPostById(params.id);
+  await updatePost(id, { ...patch, updatedAt: new Date().toISOString() });
+  const updated = await getPostById(id);
   return NextResponse.json(updated);
 }
 
-/* DELETE /api/posts/[id] */
 export async function DELETE(
-  _req: Request,
-  { params }: { params: { id: string } }
+  req: NextRequest,
+  context: { params: { id: string } }
 ) {
-  await deletePost(params.id);
+  const { id } = context.params;
+  await deletePost(id);
   return NextResponse.json({ ok: true });
 }
