@@ -2,42 +2,57 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { FaPlus, FaHome } from "react-icons/fa";
+import { FaRegNewspaper, FaHome, FaPlus, FaUserAlt } from "react-icons/fa";
 import ThemeToggle from "./ThemeToggle";
 
 export default function Navbar() {
   const pathname = usePathname();
 
+  /** helper to style active vs inactive links */
+  const navLink = (path: string) =>
+    `flex items-center gap-2 px-3 py-1 rounded-md hover:bg-blue-50 dark:hover:bg-zinc-800 transition-colors ${
+      pathname === path
+        ? "text-blue-600 font-medium"
+        : "text-gray-600 dark:text-gray-300"
+    }`;
+
   return (
-    <nav className="sticky top-0 z-50 bg-white shadow-sm dark:bg-gray-900 dark:border-gray-800">
+    <nav className="sticky top-0 z-50 backdrop-blur bg-white/80 dark:bg-zinc-900/80 border-b border-gray-200 dark:border-zinc-800 shadow-sm">
       <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
-        <Link href="/" className="text-xl font-bold text-blue-600">
-          Specscart Blog
+        {/* Logo */}
+        <Link
+          href="/"
+          className="flex items-center gap-2 text-blue-600 hover:scale-105 transition-transform"
+        >
+          <FaRegNewspaper size={26} />
+          <span className="font-bold text-lg hidden sm:inline">
+            Specscart Blog
+          </span>
         </Link>
 
-        <div className="flex gap-4">
-          <Link
-            href="/"
-            className={`flex items-center gap-2 px-3 py-1 rounded hover:bg-blue-50 dark:hover:bg-gray-800 ${
-              pathname === "/"
-                ? "text-blue-600 font-medium"
-                : "text-gray-600 dark:text-gray-300"
-            }`}
-          >
+        {/* Links */}
+        <div className="flex items-center gap-5">
+          <Link href="/" className={navLink("/")}>
             <FaHome />
-            Home
+            <span className="hidden sm:inline">Home</span>
           </Link>
-          <Link
-            href="/create"
-            className={`flex items-center gap-2 px-3 py-1 rounded hover:bg-blue-50 dark:hover:bg-gray-800 ${
-              pathname === "/create"
-                ? "text-blue-600 font-medium"
-                : "text-gray-600 dark:text-gray-300"
-            }`}
-          >
+
+          <Link href="/create" className={navLink("/create")}>
             <FaPlus />
-            New Post
+            <span className="hidden sm:inline">New Post</span>
           </Link>
+
+          <Link
+            href="https://www.linkedin.com/in/naman-sharma001/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-2 px-3 py-1 rounded-md text-gray-600 dark:text-gray-300 hover:text-blue-600 hover:bg-blue-50 dark:hover:bg-zinc-800 transition-colors"
+          >
+            <FaUserAlt />
+            <span className="hidden sm:inline">About Me</span>
+          </Link>
+
+          {/* Theme switch */}
           <ThemeToggle />
         </div>
       </div>

@@ -6,25 +6,37 @@ import { notFound } from "next/navigation";
 
 export const runtime = "nodejs";
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export default async function EditPage({ params }: any) {
+interface EditPageProps {
+  params: { id: string };
+}
+
+export default async function EditPage({ params }: EditPageProps) {
   const { id } = params;
 
   const res = await fetch(`${getBaseUrl()}/api/posts/${id}`, {
     cache: "no-store",
   });
+
   if (!res.ok) notFound();
 
   const post: Post = await res.json();
-  const { title, author, cover, body } = post;
+
+  const initialData: PostPayload = {
+    title: post.title,
+    author: post.author,
+    cover: post.cover,
+    body: post.body,
+  };
 
   return (
-    <div className="max-w-2xl mx-auto py-10 px-4">
-      <h1 className="text-2xl font-bold mb-6">Edit Blog Post</h1>
-      <PostForm
-        initial={{ title, author, cover, body } as PostPayload}
-        postId={id}
-      />
-    </div>
+    <section className="max-w-3xl mx-auto px-4 py-10">
+      <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-8">
+        Edit Blog Post
+      </h1>
+      <h1 className="text-3xl font-bold text-red-500 dark:text-yellow-300">
+        Test Dark Mode
+      </h1>
+      <PostForm initial={initialData} postId={id} />
+    </section>
   );
 }

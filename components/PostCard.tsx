@@ -19,33 +19,37 @@ export default function PostCard({ post }: { post: Post }) {
   return (
     <Link
       href={`/posts/${post.slug}`}
-      className="group rounded-lg overflow-hidden shadow hover:shadow-lg transition duration-300 border border-gray-200 bg-white"
+      className="group rounded-2xl overflow-hidden border border-gray-200 dark:border-zinc-700 bg-white/90 dark:bg-zinc-900/80 backdrop-blur shadow-sm hover:shadow-md transition-all duration-300"
     >
       {post.cover && (
-        <Image
-          src={post.cover}
-          alt={post.title}
-          width={500}
-          height={250}
-          className="w-full h-48 object-cover group-hover:scale-105 transition-transform"
-        />
+        <div className="overflow-hidden">
+          <Image
+            src={post.cover}
+            alt={post.title}
+            width={500}
+            height={250}
+            className="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-105 rounded-t-2xl"
+          />
+        </div>
       )}
-      <div className="p-4">
-        <h2 className="text-xl font-bold mb-1 text-gray-800 group-hover:text-blue-600">
+
+      <div className="p-5">
+        <h2 className="text-lg sm:text-xl font-semibold mb-1 text-gray-800 dark:text-gray-100 group-hover:text-blue-600">
           {post.title}
         </h2>
-        <p className="text-sm text-gray-500 mb-2">
+
+        <p className="text-xs text-gray-500 dark:text-gray-400 mb-3">
           By {post.author} on {new Date(post.createdAt).toLocaleDateString()}
         </p>
 
         <div
-          className="text-gray-600 text-sm line-clamp-3"
+          className="text-sm text-gray-700 dark:text-gray-300 line-clamp-3"
           dangerouslySetInnerHTML={{
             __html: renderMarkdownSnippet(post.body),
           }}
         />
 
-        <p className="mt-2 text-sm text-blue-600 hover:underline">
+        <p className="mt-3 text-sm text-blue-600 dark:text-blue-400 font-medium hover:underline">
           Read more →
         </p>
       </div>
