@@ -1,22 +1,41 @@
 import { NextResponse } from 'next/server';
-import { readPosts, writePosts, makePost } from '@/lib/posts';
+import { readPosts, writePosts } from '@/lib/posts';
 import type { Post } from '@/types/post';
+import { v4 as uuid } from 'uuid';
 
+/* GET /api/posts – list */
 export async function GET() {
-  return NextResponse.json(await readPosts());
+  const posts = await readPosts();
+  return NextResponse.json(posts);
 }
 
+/* POST /api/posts – create */
 export async function POST(req: Request) {
-  const data = (await req.json()) as Partial<Post>;
+  const body = (await req.json()) as Partial<Post>;
 
-  if (!data.title || !data.author || !data.body) {
-    return NextResponse.json({ error: 'Missing fields' }, { status: 400 });
+  // basic validation
+  if (!body.title || !body.author || !body.body) {
+    return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
   }
 
-  const newPost = makePost(data as Omit<Post, 'id' | 'slug' | 'createdAt'>);
-  const posts = await readPosts();
-  posts.unshift(newPost);
-  await writePosts(posts);
+  // build new post
+  const post: Post = {
+    id: uuid(),
+    slug: body.title
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/(^-|-$)/g, ''),
+    title: body.title,
+    author: body.author,
+    body: body.body,
+    cover: body.cover ?? '',
+    createdAt: new Date().toISOString(),
+  };
 
-  return NextResponse.json(newPost, { status: 201 });
+  // Mongo-based write helper inserts it
+  const current = await readPosts();
+  current.unshift(post);
+  await writePosts(current);
+
+  return NextResponse.json(post, { status: 201 });
 }
