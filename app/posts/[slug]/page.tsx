@@ -49,10 +49,12 @@ export default async function PostPage({ params }: any) {
       </p>
 
       {/* Body with parsed blocks */}
-      <div className="prose prose-lg max-w-none dark:prose-invert">
+      <div className="prose prose-lg max-w-none">
         {chunks.map((chunk, i) =>
           typeof chunk === "string" ? (
-            <p key={i}>{chunk}</p>
+            <p key={i} className="text-gray-900">
+              {chunk}
+            </p>
           ) : (
             <BlockRenderer key={i} block={chunk} />
           )
