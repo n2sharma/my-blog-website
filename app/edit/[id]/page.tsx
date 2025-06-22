@@ -6,11 +6,8 @@ import { notFound } from "next/navigation";
 
 export const runtime = "nodejs";
 
-interface EditPageProps {
-  params: { id: string };
-}
-
-export default async function EditPage({ params }: EditPageProps) {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export default async function EditPage({ params }: any) {
   const { id } = params;
 
   const res = await fetch(`${getBaseUrl()}/api/posts/${id}`, {
