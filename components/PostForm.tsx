@@ -78,14 +78,19 @@ export default function PostForm({ initial, postId }: Props) {
   return (
     <form
       onSubmit={handleSubmit}
-      className="space-y-6 bg-white dark:bg-zinc-900 p-6 rounded-xl shadow max-w-2xl mx-auto"
+      className="max-w-2xl mx-auto bg-white dark:bg-zinc-900 rounded-2xl p-8 shadow-lg space-y-6 border border-gray-200 dark:border-zinc-800 transition-all"
     >
+      <h2 className="text-2xl font-semibold text-gray-800 dark:text-gray-100 mb-2">
+        {postId ? "Edit Post" : "Create New Post"}
+      </h2>
+
       <FormField
         label="Title *"
         name="title"
         value={form.title}
         onChange={handleChange}
         required
+        placeholder="Blog title..."
       />
 
       <FormField
@@ -94,6 +99,7 @@ export default function PostForm({ initial, postId }: Props) {
         value={form.author}
         onChange={handleChange}
         required
+        placeholder="Your Name..."
       />
 
       <FormField
@@ -118,7 +124,7 @@ export default function PostForm({ initial, postId }: Props) {
       <button
         type="submit"
         disabled={submitting}
-        className="bg-blue-600 hover:bg-blue-700 text-white font-medium px-6 py-2 rounded-md transition disabled:opacity-50"
+        className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2.5 rounded-lg transition disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
       >
         {submitting
           ? postId
