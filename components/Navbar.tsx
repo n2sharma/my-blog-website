@@ -8,12 +8,16 @@ import ThemeToggle from "./ThemeToggle";
 export default function Navbar() {
   const pathname = usePathname();
 
-  /** helper to style active vs inactive links */
+  // Shared styles for nav links
+  const baseLinkClasses =
+    "flex items-center gap-2 px-3 py-1 rounded-md text-sm sm:text-base font-medium transition-colors";
+
+  // Active/inactive styles
   const navLink = (path: string) =>
-    `flex items-center gap-2 px-3 py-1 rounded-md hover:bg-blue-50 dark:hover:bg-zinc-800 transition-colors ${
+    `${baseLinkClasses} ${
       pathname === path
-        ? "text-blue-600 font-medium"
-        : "text-gray-600 dark:text-gray-300"
+        ? "text-blue-600 bg-blue-50 dark:bg-zinc-800"
+        : "text-gray-600 dark:text-gray-300 hover:text-blue-600 hover:bg-blue-50 dark:hover:bg-zinc-800"
     }`;
 
   return (
@@ -31,7 +35,7 @@ export default function Navbar() {
         </Link>
 
         {/* Links */}
-        <div className="flex items-center gap-5">
+        <div className="flex items-center gap-4 sm:gap-5">
           <Link href="/" className={navLink("/")}>
             <FaHome />
             <span className="hidden sm:inline">Home</span>
@@ -46,13 +50,13 @@ export default function Navbar() {
             href="https://www.linkedin.com/in/naman-sharma001/"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-2 px-3 py-1 rounded-md text-gray-600 dark:text-gray-300 hover:text-blue-600 hover:bg-blue-50 dark:hover:bg-zinc-800 transition-colors"
+            className={`${baseLinkClasses} text-gray-600 dark:text-gray-300 hover:text-blue-600 hover:bg-blue-50 dark:hover:bg-zinc-800`}
           >
             <FaUserAlt />
             <span className="hidden sm:inline">About Me</span>
           </Link>
 
-          {/* Theme switch */}
+          {/* Theme toggle */}
           <ThemeToggle />
         </div>
       </div>
