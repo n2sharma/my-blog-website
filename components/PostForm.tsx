@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import Toast from "./Toast";
 
 export type PostPayload = {
   title: string;
@@ -22,6 +23,10 @@ export default function PostForm({ initial, postId }: Props) {
   );
   const [error, setError] = useState("");
   const [submitting, setSubmitting] = useState(false);
+  const [toast, setToast] = useState<null | {
+    message: string;
+    type?: "success" | "error";
+  }>(null);
 
   const isValidUrl = (url?: string) => {
     if (!url) return true;
@@ -66,75 +71,93 @@ export default function PostForm({ initial, postId }: Props) {
         throw new Error(error || "Failed to save post");
       }
 
-      router.push("/");
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      setToast({
+        message: postId ? "Post updated successfully!" : "Post published!",
+        type: "success",
+      });
+
+      setTimeout(() => router.push("/"), 1500);
     } catch (err: any) {
       setError(err.message);
+      setToast({
+        message: err.message || "Something went wrong",
+        type: "error",
+      });
     } finally {
       setSubmitting(false);
     }
   };
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="max-w-2xl mx-auto bg-white dark:bg-zinc-900 rounded-2xl p-8 shadow-lg space-y-6 border border-gray-200 dark:border-zinc-800 transition-all"
-    >
-      <h2 className="text-2xl font-semibold text-gray-800 dark:text-gray-100 mb-2">
-        {postId ? "Edit Post" : "Create New Post"}
-      </h2>
-
-      <FormField
-        label="Title *"
-        name="title"
-        value={form.title}
-        onChange={handleChange}
-        required
-        placeholder="Blog title..."
-      />
-
-      <FormField
-        label="Author *"
-        name="author"
-        value={form.author}
-        onChange={handleChange}
-        required
-        placeholder="Your Name..."
-      />
-
-      <FormField
-        label="Cover Image URL"
-        name="cover"
-        value={form.cover}
-        onChange={handleChange}
-        placeholder="https://example.com/image.jpg"
-      />
-
-      <FormTextarea
-        label="Body *"
-        name="body"
-        value={form.body}
-        onChange={handleChange}
-        required
-        placeholder="Supports {{block ...}} tags"
-      />
-
-      {error && <p className="text-sm text-red-500">{error}</p>}
-
-      <button
-        type="submit"
-        disabled={submitting}
-        className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2.5 rounded-lg transition disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
+    <>
+      <form
+        onSubmit={handleSubmit}
+        className="max-w-2xl mx-auto bg-white dark:bg-zinc-900 rounded-2xl p-8 shadow-lg space-y-6 border border-gray-200 dark:border-zinc-800 transition-all"
       >
-        {submitting
-          ? postId
-            ? "Updating..."
-            : "Publishing..."
-          : postId
-          ? "Update Post"
-          : "Publish Post"}
-      </button>
-    </form>
+        <h2 className="text-2xl font-semibold text-gray-800 dark:text-gray-100 mb-2">
+          {postId ? "Edit Post" : "Create New Post"}
+        </h2>
+
+        <FormField
+          label="Title *"
+          name="title"
+          value={form.title}
+          onChange={handleChange}
+          required
+          placeholder="Blog title..."
+        />
+
+        <FormField
+          label="Author *"
+          name="author"
+          value={form.author}
+          onChange={handleChange}
+          required
+          placeholder="Your Name..."
+        />
+
+        <FormField
+          label="Cover Image URL"
+          name="cover"
+          value={form.cover}
+          onChange={handleChange}
+          placeholder="https://example.com/image.jpg"
+        />
+
+        <FormTextarea
+          label="Body *"
+          name="body"
+          value={form.body}
+          onChange={handleChange}
+          required
+          placeholder="Supports {{block ...}} tags"
+        />
+
+        {error && <p className="text-sm text-red-500">{error}</p>}
+
+        <button
+          type="submit"
+          disabled={submitting}
+          className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2.5 rounded-lg transition disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
+        >
+          {submitting
+            ? postId
+              ? "Updating..."
+              : "Publishing..."
+            : postId
+            ? "Update Post"
+            : "Publish Post"}
+        </button>
+      </form>
+
+      {toast && (
+        <Toast
+          message={toast.message}
+          type={toast.type}
+          onClose={() => setToast(null)}
+        />
+      )}
+    </>
   );
 }
 
