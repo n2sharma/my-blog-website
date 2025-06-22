@@ -25,7 +25,7 @@ export default async function PostPage({ params }: any) {
   const chunks = parseBlocks(post.body);
 
   return (
-    <article className="max-w-3xl mx-auto rounded-xl shadow-md bg-white dark:bg-zinc-900 px-6 pb-12 pt-6 transition-colors">
+    <article className="max-w-3xl mx-auto rounded-xl shadow-md bg-white dark:bg-zinc-900 px-6 pb-12 pt-6 transition-colors mt-4">
       {/* Cover */}
       {post.cover && (
         <div className="mb-6 overflow-hidden rounded-lg shadow-sm">
@@ -34,8 +34,7 @@ export default async function PostPage({ params }: any) {
             alt={post.title}
             width={1280}
             height={640}
-            className="w-full h-64 sm:h-80 object-cover rounded-md"
-            priority
+            className="w-full h-48 sm:h-72 lg:h-96 object-cover rounded-lg"
           />
         </div>
       )}
