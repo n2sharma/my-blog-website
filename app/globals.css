@@ -1,4 +1,7 @@
 @import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 :root {
   --background: #ffffff;
@@ -19,10 +22,4 @@
   }
 }
 
-body {
-  background-color: #f5f7fa;         /* light soft gray-blue */
-  color: #1a1a1a;                    /* dark neutral for good readability */
-  font-family: 'Inter', sans-serif; /* modern, clean font */
-  line-height: 1.6;
-  font-size: 16px;
-}
+

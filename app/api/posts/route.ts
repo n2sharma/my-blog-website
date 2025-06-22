@@ -1,41 +1,39 @@
 import { NextResponse } from 'next/server';
-import { readPosts, writePosts } from '@/lib/posts';
-import type { Post } from '@/types/post';
 import { v4 as uuid } from 'uuid';
+import {
+  getAllPosts,
+  createPost,
+} from '@/lib/posts';
+import type { Post } from '@/types/post';
 
-/* GET /api/posts – list */
+/* GET /api/posts */
 export async function GET() {
-  const posts = await readPosts();
+  const posts = await getAllPosts();
   return NextResponse.json(posts);
 }
 
-/* POST /api/posts – create */
+/* POST /api/posts */
 export async function POST(req: Request) {
-  const body = (await req.json()) as Partial<Post>;
+  const data = (await req.json()) as Partial<Post>;
 
-  // basic validation
-  if (!body.title || !body.author || !body.body) {
+  if (!data.title || !data.author || !data.body) {
     return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
   }
 
-  // build new post
   const post: Post = {
     id: uuid(),
-    slug: body.title
+    slug: data.title
       .toLowerCase()
       .replace(/[^a-z0-9]+/g, '-')
       .replace(/(^-|-$)/g, ''),
-    title: body.title,
-    author: body.author,
-    body: body.body,
-    cover: body.cover ?? '',
+    title: data.title,
+    author: data.author,
+    cover: data.cover ?? '',
+    body: data.body,
     createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
   };
 
-  // Mongo-based write helper inserts it
-  const current = await readPosts();
-  current.unshift(post);
-  await writePosts(current);
-
+  await createPost(post);
   return NextResponse.json(post, { status: 201 });
 }

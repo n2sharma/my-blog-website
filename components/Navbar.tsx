@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { FaPlus, FaHome } from "react-icons/fa";
+import ThemeToggle from "./ThemeToggle";
 
 export default function Navbar() {
   const pathname = usePathname();
@@ -37,6 +38,7 @@ export default function Navbar() {
             <FaPlus />
             New Post
           </Link>
+          <ThemeToggle />
         </div>
       </div>
     </nav>

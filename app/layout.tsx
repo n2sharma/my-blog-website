@@ -1,6 +1,11 @@
-import "./globals.css";
-import { Providers } from "./providers";
+import { ThemeProvider } from "next-themes";
+import "./globals.css"; // Make sure Tailwind is imported here
 import Navbar from "@/components/Navbar";
+
+export const metadata = {
+  title: "Specscart Blog",
+  description: "Fullstack Blog using Next.js",
+};
 
 export default function RootLayout({
   children,
@@ -10,10 +15,10 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body>
-        <Providers>
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <Navbar />
-          <main className="container mx-auto px-4 py-6">{children}</main>
-        </Providers>
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   );

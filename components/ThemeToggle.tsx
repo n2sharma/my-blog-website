@@ -1,5 +1,4 @@
 "use client";
-
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
 
@@ -9,14 +8,14 @@ export default function ThemeToggle() {
 
   useEffect(() => setMounted(true), []);
 
-  if (!mounted) return null; // avoids SSR mismatch
+  if (!mounted) return null;
 
   return (
     <button
-      className="bg-gray-200 dark:bg-gray-700 text-black dark:text-white px-4 py-2 rounded"
       onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+      className="p-2 text-sm border rounded-md"
     >
-      Toggle {theme === "dark" ? "☀ Light" : "🌙 Dark"}
+      {theme === "dark" ? "☀️" : "🌙"}
     </button>
   );
 }

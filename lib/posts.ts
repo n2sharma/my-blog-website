@@ -1,22 +1,34 @@
 // lib/posts.ts
-import clientPromise from "./mongodb";
-import { Post } from "@/types/post";
+import clientPromise from './mongodb';
+import { Post } from '@/types/post';
 
-const DB_NAME = "blog";
-const COLLECTION = "posts";
+const DB = 'blog';
+const COL = 'posts';
 
-export async function readPosts(): Promise<Post[]> {
+export async function getAllPosts(): Promise<Post[]> {
   const client = await clientPromise;
-  const db = client.db(DB_NAME);
-  return await db.collection<Post>(COLLECTION).find().toArray();
+  return client.db(DB).collection<Post>(COL).find().toArray();
 }
 
-export async function writePosts(posts: Post[]): Promise<void> {
+export async function getPostById(id: string): Promise<Post | null> {
   const client = await clientPromise;
-  const db = client.db(DB_NAME);
-  const col = db.collection<Post>(COLLECTION);
+  return client.db(DB).collection<Post>(COL).findOne({ id });
+}
 
-  // Clear and replace (or upsert in a real app)
-  await col.deleteMany({});
-  await col.insertMany(posts);
+export async function createPost(post: Post) {
+  const client = await clientPromise;
+  await client.db(DB).collection<Post>(COL).insertOne(post);
+}
+
+export async function updatePost(id: string, patch: Partial<Post>) {
+  const client = await clientPromise;
+  await client
+    .db(DB)
+    .collection<Post>(COL)
+    .updateOne({ id }, { $set: patch });
+}
+
+export async function deletePost(id: string) {
+  const client = await clientPromise;
+  await client.db(DB).collection<Post>(COL).deleteOne({ id });
 }
