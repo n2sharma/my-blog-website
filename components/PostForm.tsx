@@ -77,6 +77,7 @@ export default function PostForm({ initial, postId }: Props) {
       });
 
       setTimeout(() => router.push("/"), 1500);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       setError(err.message);
       setToast({

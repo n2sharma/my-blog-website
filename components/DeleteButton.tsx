@@ -30,6 +30,7 @@ export default function DeleteButton({ id }: { id: string }) {
 
       // Optional delay before redirect
       setTimeout(() => router.push("/"), 1500);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       setToast({
         message: err.message || "Something went wrong",
